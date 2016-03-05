@@ -5,11 +5,10 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Date;
 
 @Data
 @Entity
-public class Miembro {
+public class Miembro extends AbstractAuditEntity {
 
     @Id
     @GeneratedValue
@@ -19,7 +18,4 @@ public class Miembro {
     private String apelyido;
     private String username;
     private String password;
-
-    private Date created;
-    private Date updated;
 }
