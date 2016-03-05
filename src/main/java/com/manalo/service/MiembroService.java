@@ -1,6 +1,5 @@
 package com.manalo.service;
 
-import com.manalo.datatransfer.MiembroForm;
 import com.manalo.entity.Miembro;
 import com.manalo.repository.MiembroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,16 @@ public class MiembroService {
         return miembroRepository.findByApelyidoStartingWith(apelyido);
     }
 
-    public void save(MiembroForm miembroForm) {
+    public Miembro save(Miembro miembro) {
 
+        if (miembro.getId() != null) { // update
+            Miembro existing = miembroRepository.findOne(miembro.getId());
+            existing.setUsername(miembro.getUsername());
+            existing.setPangalan(miembro.getPangalan());
+            existing.setApelyido(miembro.getApelyido());
+            return miembroRepository.save(existing);
+        } else { // create
+            return miembroRepository.save(miembro);
+        }
     }
 }
