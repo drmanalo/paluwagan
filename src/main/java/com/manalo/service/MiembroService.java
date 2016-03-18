@@ -5,18 +5,19 @@ import com.manalo.repository.MiembroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.Collection;
 
 @Service
+@Transactional
 public class MiembroService {
 
     @Autowired
     private MiembroRepository miembroRepository;
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    public Miembro findOne(Integer id) {
+        return miembroRepository.findOne(id);
+    }
 
     public Collection<Miembro> findAll() {
         return miembroRepository.findAll();
