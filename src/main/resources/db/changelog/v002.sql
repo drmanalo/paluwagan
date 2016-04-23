@@ -1,2 +1,2 @@
-insert into miembro (id, pangalan, apelyido, username, password) values (1, 'James', 'Bond', 'admin', 'secret');
-insert into miembro (id, pangalan, apelyido, username, password) values (2, 'Eve', 'Moneypenny', 'money', 'penny');
+insert into miembro (id, pangalan, apelyido, username, password, lastModifiedDate) values (1, 'James', 'Bond', 'admin', 'secret', systimestamp);
+insert into miembro (id, pangalan, apelyido, username, password, lastModifiedDate) values (2, 'Eve', 'Moneypenny', 'money', 'penny', systimestamp);

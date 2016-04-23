@@ -1,27 +1,11 @@
--- Not being run by liquibase
--- Only for adhoc query purpose
-create table miembro (
-    id integer not null,
-    pangalan varchar(100),
-    apelyido varchar(100),
-    username varchar(50) not null unique,
-    password varchar(255) not null,
-    constraint miembro_pkey primary key (id)
-);
-
-create table serye (
-    id int not null,
-    umpisa timestamp with time zone,
-    tapos timestamp with time zone,
-    constraint serye_pkey primary key (id)
-);
-
-create table bangko (
-    id int not null,
-    miembroId int references miembro(id),
-    magkano money not null,
-    kailan timestamp with time zone,
-    transaksyon varchar(10) not null,
-    seryeId int references serye(id),
-    constraint hulog_pkey primary key (id)
-);
+create sequence hibernate_sequence start with 1 increment by 1;
+create table Hulog (id bigint not null, createdDate timestamp, lastModifiedDate timestamp, magkano varchar(255), createdBy_id bigint, lastModifiedBy_id bigint, miembro_id bigint, primary key (id));
+create table Miembro (id bigint not null, createdDate timestamp, lastModifiedDate timestamp, apelyido varchar(255), pangalan varchar(255), password varchar(255), username varchar(255), createdBy_id bigint, lastModifiedBy_id bigint, primary key (id));
+create table Serye (id bigint not null, createdDate timestamp, lastModifiedDate timestamp, tapos date, umpisa date, createdBy_id bigint, lastModifiedBy_id bigint, primary key (id));
+alter table Hulog add constraint FK_hulog_createdBy_id foreign key (createdBy_id) references Hulog;
+alter table Hulog add constraint FK_hulog_lastModifiedBy_id foreign key (lastModifiedBy_id) references Hulog;
+alter table Hulog add constraint FK_hulog_miembro_id foreign key (miembro_id) references Miembro;
+alter table Miembro add constraint FK_miembro_createdBy_id foreign key (createdBy_id) references Miembro;
+alter table Miembro add constraint FK_miembro_lastModifiedBy_id foreign key (lastModifiedBy_id) references Miembro;
+alter table Serye add constraint FK_serye_createdBy_id foreign key (createdBy_id) references Serye;
+alter table Serye add constraint FK_serye_lastModifiedBy_id foreign key (lastModifiedBy_id) references Serye;

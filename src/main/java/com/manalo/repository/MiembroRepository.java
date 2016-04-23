@@ -1,15 +1,16 @@
 package com.manalo.repository;
 
-import com.manalo.entity.Miembro;
+import java.util.Collection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
+import com.manalo.entity.Miembro;
 
 @Repository
-public interface MiembroRepository extends JpaRepository<Miembro, Integer>{
+public interface MiembroRepository extends JpaRepository<Miembro, Long> {
 
-    Miembro findByUsername(String username);
+	Miembro findByUsername(String username);
 
-    Collection<Miembro> findByApelyidoStartingWith(String apelyido);
+	Collection<Miembro> findByApelyidoStartingWith(String apelyido);
 }

@@ -3,16 +3,13 @@
 	<div class="row col-lg-12">
 		<h1 class="page-header">
 			<spring:message code="members" />
-			<a href="addMember" class="btn btn-primary pull-right"> <spring:message
-					code="new.member" /> <i class="glyphicon glyphicon-plus-sign"></i>
-			</a>
 		</h1>
 	</div>
 	<div class="row">
-		<table class="table table-striped">
+		<table id="miembros" class="table table-striped">
 			<thead>
 				<tr>
-					<th></th>
+				    <th></th>
 					<th><spring:message code="firstname" /></th>
 					<th><spring:message code="lastname" /></th>
 					<th><spring:message code="username" /></th>
@@ -20,26 +17,81 @@
 					<th><spring:message code="modified.by" /></th>
 				</tr>
 			</thead>
-			<tbody>
-				<c:forEach items="${ members }" var="member">
-					<tr>
-						<td><button class="btn btn-xs btn-circle btn-success"
-								title="<spring:message code="edit"/>">
-								<i class="fa fa-pencil"></i>
-							</button>
-							<button class="btn btn-xs btn-circle btn-danger"
-								title="<spring:message code="delete"/>">
-								<i class="fa fa-trash"></i>
-							</button>
-						<td>${ member.pangalan }</td>
-						<td>${ member.apelyido }</td>
-						<td>${ member.username }</td>
-						<td>${ member.modifiedBy }</td>
-						<td>${ member.dateModified }</td>
-					</tr>
-				</c:forEach>
-			</tbody>
 		</table>
 	</div>
 </div>
+<spring:message code="email" var="email" />
+<spring:message code="password" var="password" />
+<spring:message code="firstname" var="firstname" />
+<spring:message code="lastname" var="lastname" />
+<spring:message code="modified.date" var="modifiedDate" />
+<spring:message code="modified.by" var="modifiedBy" />
+
+<script type="text/javascript">
+
+    var editor;
+
+    $(function() {
+
+        editor = new $.fn.dataTable.Editor( {
+                ajax    : "miembroDtoList",
+                idSrc   : "id",
+                table   : "#miembros",
+                fields: [ {
+                        label: "${firstname}:",
+                        name : "pangalan"
+                    }, {
+                        label: "${lastname}:",
+                        name : "apelyido"
+                    }, {
+                        label: "Username:",
+                        name : "username"
+                    }, {
+                        label: "Password:",
+                        name : "password",
+                        type : "password"
+                    }, {
+                        label: "${modifiedDate}:",
+                        name: "modified",
+                        type: "datetime"
+                    }, {
+                        label: "${modifiedBy}:",
+                        name: "modifiedBy"
+                    }
+                ]
+            } );
+
+         $('#miembros').on( 'click', 'tbody td:not(:first-child)', function (e) {
+                editor.inline( this );
+            } );
+
+        $('#miembros').DataTable( {
+                dom     : "Bfrtip",
+                ajax    : "miembroDtoList",
+                columns: [
+                    {
+                        data: null,
+                        defaultContent: '',
+                        className: 'select-checkbox',
+                        orderable: false
+                    },
+                    { data: "pangalan" },
+                    { data: "apelyido" },
+                    { data: "username" },
+                    { data: "modified" },
+                    { data: "modifiedBy" }
+                ],
+                select: {
+                    style:    'os',
+                    selector: 'td:first-child'
+                },
+                buttons: [
+                    { extend: "create", editor: editor },
+                    { extend: "edit",   editor: editor },
+                    { extend: "remove", editor: editor }
+                ]
+            } );
+
+    } );
+</script>
 <%@include file="../includes/footer.jspf"%>
