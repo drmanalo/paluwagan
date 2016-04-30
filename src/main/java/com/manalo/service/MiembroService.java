@@ -1,13 +1,10 @@
 package com.manalo.service;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.manalo.dto.MiembroDto;
 import com.manalo.entity.Miembro;
 import com.manalo.repository.MiembroRepository;
 
@@ -21,17 +18,8 @@ public class MiembroService {
 		return miembroRepository.findOne(id);
 	}
 
-	public Collection<MiembroDto> findAll() {
-
-		Collection<Miembro> miembros = miembroRepository.findAll();
-		Collection<MiembroDto> miembroDtos = new ArrayList<>();
-
-		for (Miembro miembro : miembros) {
-			MiembroDto miembroDto = new MiembroDto();
-			BeanUtils.copyProperties(miembro, miembroDto);
-			miembroDtos.add(miembroDto);
-		}
-		return miembroDtos;
+	public Collection<Miembro> findAll() {
+		return miembroRepository.findAll();
 	}
 
 	public Collection<Miembro> findByApelyidoStartingWith(String apelyido) {
